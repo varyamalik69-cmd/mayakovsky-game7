@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Семь дверей Маяковского</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Georgia', serif;
+            min-height: 100vh;
+            background: #f5efe6;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(200, 50, 50, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(200, 50, 50, 0.05) 0%, transparent 50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 20px;
+        }
+
+        .game-container {
+            max-width: 1400px;
+            width: 100%;
+            background: rgba(255, 252, 245, 0.92);
+            backdrop-filter: blur(4px);
+            border-radius: 40px;
+            padding: 35px 40px 45px;
+            box-shadow: 0 20px 60px rgba(120, 80, 40, 0.15), 0 0 0 1px rgba(200, 50, 50, 0.15);
+            border-top: 4px solid #cc2222;
+        }
+
+        /* Шапка с революционным стилем */
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            position: relative;
+        }
+
+        /* Красный уголок */
+        .header::after {
+            content: '★';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 2.5rem;
+            color: #cc2222;
+            opacity: 0.3;
+        }
+
+        .poet-photo {
+            flex-shrink: 0;
+            width: 140px;
+            height: 200px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(100, 70, 40, 0.2), 0 0 0 3px #cc2222;
+            border: 3px solid #f5efe6;
+            background: #e8ddd0;
+            transition: transform 0.3s ease;
+        }
+
+        .poet-photo:hover {
+            transform: scale(1.02);
+        }
+
+        .poet-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            display: block;
+        }
+
+        .title-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: #3d2b1f;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+            font-family: 'Georgia', serif;
+        }
+
+        h1 span {
+            color: #cc2222;
+        }
+
+        .author-line {
+            font-size: 1.1rem;
+            color: #8a7a6a;
+            font-style: italic;
+            margin-bottom: 6px;
+        }
+
+        .author-line span {
+            background: #cc2222;
+            padding: 2px 16px;
+            border-radius: 30px;
+            font-style: normal;
+            font-weight: 500;
+            color: #ffffff;
+        }
+
+        .quote {
+            font-size: 1.15rem;
+            color: #6a5a4a;
+            font-style: italic;
+            border-left: 4px solid #cc2222;
+            padding-left: 18px;
+            margin-top: 4px;
+            font-weight: 300;
+        }
+
+        .quote::before {
+            content: '"';
+            font-size: 1.8rem;
+            color: #cc2222;
+            margin-right: 4px;
+        }
+
+        .quote::after {
+            content: '"';
+            font-size: 1.8rem;
+            color: #cc2222;
+            margin-left: 4px;
+        }
+
+        /* Революционные лозунги - бегущая строка */
+        .slogan-bar {
+            background: #cc2222;
+            padding: 8px 0;
+            margin: 15px 0 20px;
+            border-radius: 40px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .slogan-track {
+            display: flex;
+            animation: scrollSlogans 20s linear infinite;
+            white-space: nowrap;
+        }
+
+        .slogan-item {
+            color: #ffffff;
+            font-size: 1.1rem;
+            font-weight: 600;
+            padding: 0 40px;
+            font-family: 'Georgia', serif;
+            letter-spacing: 1px;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.2);
+        }
+
+        .slogan-item::before {
+            content: '⚡';
+            margin-right: 12px;
+        }
+
+        .slogan-item::after {
+            content: '⚡';
+            margin-left: 12px;
+        }
+
+        @keyframes scrollSlogans {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Периоды-двери */
+        .periods-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #b09a84;
+            margin: 25px 0 16px;
+            font-weight: 600;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .periods-label::before,
+        .periods-label::after {
+            content: '———';
+            color: #cc2222;
+            opacity: 0.4;
+            letter-spacing: 0;
+        }
+
+        /* ===== ВСЕ ДВЕРИ В ОДИН РЯД ===== */
+        .doors-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 20px;
+            margin: 16px 0 30px;
+        }
+
+        /* ===== 3D ДВЕРИ ===== */
+        .door-wrapper {
+            perspective: 800px;
+            cursor: pointer;
+        }
+
+        .door-card {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 3/4;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.4, 0.2, 0.2, 1);
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(100, 70, 40, 0.15);
+        }
+
+        .door-card.opened {
+            transform: rotateY(-110deg);
+        }
+
+        /* Передняя сторона двери */
+        .door-front {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            background: linear-gradient(180deg, #f5ede3 0%, #e8ddd0 100%);
+            border-radius: 12px;
+            border: 4px solid #cc2222;
+            box-shadow: inset 0 0 30px rgba(180, 150, 120, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            overflow: hidden;
+        }
+
+        /* Декоративные панели на двери */
+        .door-front::before {
+            content: '';
+            position: absolute;
+            top: 15%;
+            left: 12%;
+            right: 12%;
+            bottom: 15%;
+            border: 2px solid rgba(204, 34, 34, 0.2);
+            border-radius: 8px;
+            background: rgba(255, 252, 245, 0.2);
+        }
+
+        .door-front::after {
+            content: '★';
+            position: absolute;
+            bottom: 12px;
+            right: 14px;
+            font-size: 1.2rem;
+            color: rgba(204, 34, 34, 0.15);
+        }
+
+        .door-icon {
+            font-size: 2.8rem;
+            line-height: 1.2;
+            display: block;
+            margin-bottom: 6px;
+            color: #b89570;
+            transition: 0.3s;
+            position: relative;
+            z-index: 1;
+        }
+
+        .door-label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #3d2b1f;
+            background: rgba(255, 252, 245, 0.85);
+            padding: 3px 12px;
+            border-radius: 30px;
+            display: inline-block;
+            font-family: 'Georgia', serif;
+            position: relative;
+            z-index: 1;
+            border: 1px solid #cc2222;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .door-number {
+            position: absolute;
+            top: 10px;
+            right: 14px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: rgba(204, 34, 34, 0.15);
+            font-family: 'Georgia', serif;
+            z-index: 1;
+        }
+
+        /* Дверная ручка */
+        .door-handle {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #e8d5b8, #b89570);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2), inset 0 -2px 4px rgba(0,0,0,0.1);
+            z-index: 2;
+            border: 1px solid #a08060;
+            transition: 0.3s;
+        }
+
+        .door-handle::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Задняя сторона двери (открытая) */
+        .door-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            background: linear-gradient(180deg, #f0e8dd 0%, #e0d5c8 100%);
+            border-radius: 12px;
+            border: 4px solid #cc2222;
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            box-shadow: inset 0 0 30px rgba(204, 34, 34, 0.05);
+        }
+
+        .door-back .door-icon {
+            color: #cc2222;
+            font-size: 2.5rem;
+        }
+
+        .door-back .door-label {
+            background: rgba(255, 252, 245, 0.8);
+            border-color: #cc2222;
+            color: #2a1a0a;
+        }
+
+        .door-status-open {
+            font-size: 0.7rem;
+            color: #cc2222;
+            font-weight: 600;
+            margin-top: 4px;
+            background: rgba(255,255,255,0.6);
+            padding: 2px 12px;
+            border-radius: 20px;
+            border: 1px solid #cc2222;
+        }
+
+        /* Состояние disabled (закрыто) */
+        .door-wrapper.disabled {
+            opacity: 0.5;
+            cursor: default;
+            filter: grayscale(0.3);
+            pointer-events: none;
+        }
+
+        .door-wrapper.disabled .door-card {
+            transform: rotateY(0deg) !important;
+        }
+
+        /* Ховер на закрытую дверь */
+        .door-wrapper:not(.disabled):not(.opened-wrapper):hover .door-card {
+            transform: rotateY(-15deg);
+            box-shadow: 0 12px 40px rgba(204, 34, 34, 0.2);
+        }
+
+        .door-wrapper:not(.disabled):not(.opened-wrapper):hover .door-handle {
+            transform: translateY(-50%) scale(1.15);
+            box-shadow: 0 2px 12px rgba(204, 34, 34, 0.4);
+        }
+
+        .door-wrapper:not(.disabled):not(.opened-wrapper):hover .door-front {
+            border-color: #ff4444;
+        }
+
+        /* Открытая дверь */
+        .door-wrapper.opened-wrapper {
+            cursor: default;
+        }
+
+        .door-wrapper.opened-wrapper .door-card {
+            transform: rotateY(-110deg);
+        }
+
+        /* Контролы */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #cc2222;
+            margin-top: 5px;
+        }
+
+        .sound-control {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #6a5a4a;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .toggle {
+            position: relative;
+            width: 50px;
+            height: 28px;
+            background: #ddd0c0;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+            border: none;
+            padding: 0;
+        }
+
+        .toggle.active {
+            background: #cc2222;
+        }
+
+        .toggle::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            transition: 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        }
+
+        .toggle.active::after {
+            left: 25px;
+        }
+
+        .btn-reset {
+            background: #cc2222;
+            border: none;
+            padding: 10px 30px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #ffffff;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 2px solid #cc2222;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .btn-reset:hover {
+            background: #ff3333;
+            transform: scale(0.97);
+            border-color: #ff3333;
+        }
+
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(60, 40, 25, 0.5);
+            backdrop-filter: blur(6px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #fcf8f2;
+            max-width: 580px;
+            width: 90%;
+            padding: 35px 32px 40px;
+            border-radius: 40px;
+            border: 2px solid #cc2222;
+            box-shadow: 0 30px 60px rgba(60, 40, 25, 0.3);
+            color: #3d2b1f;
+        }
+
+        .modal-content h2 {
+            font-size: 1.8rem;
+            font-family: 'Georgia', serif;
+            color: #3d2b1f;
+            border-bottom: 2px solid #cc2222;
+            padding-bottom: 12px;
+            margin-bottom: 22px;
+            text-align: center;
+        }
+
+        .modal-content h2::before {
+            content: '★ ';
+            color: #cc2222;
+        }
+
+        .question-block {
+            margin-bottom: 24px;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            font-weight: 500;
+            margin-bottom: 12px;
+            color: #3d2b1f;
+            font-family: 'Georgia', serif;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .option-btn {
+            background: #f0ece6;
+            border: 1px solid #ddd0c0;
+            border-radius: 40px;
+            padding: 12px 20px;
+            color: #3d2b1f;
+            font-size: 1rem;
+            text-align: left;
+            transition: 0.15s;
+            cursor: pointer;
+            font-weight: 400;
+        }
+
+        .option-btn:hover {
+            background: #e8ddd0;
+            border-color: #cc2222;
+        }
+
+        .option-btn.correct {
+            background: #cc2222;
+            border-color: #aa1111;
+            color: #ffffff;
+        }
+
+        .option-btn.wrong {
+            background: #666;
+            border-color: #444;
+            color: #ffffff;
+        }
+
+        .option-btn:disabled {
+            opacity: 0.6;
+            cursor: default;
+        }
+
+        .feedback {
+            margin: 16px 0 12px;
+            font-size: 1.05rem;
+            padding: 12px 18px;
+            border-radius: 30px;
+            text-align: center;
+            background: #f0ece6;
+        }
+
+        .feedback.success {
+            color: #cc2222;
+            background: #f5ece6;
+            border-left: 5px solid #cc2222;
+        }
+
+        .feedback.error {
+            color: #666;
+            background: #f0ece6;
+            border-left: 5px solid #666;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 10px;
+            gap: 12px;
+        }
+
+        .btn-close-modal {
+            background: #cc2222;
+            border: none;
+            padding: 10px 30px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #ffffff;
+            cursor: pointer;
+            transition: 0.15s;
+            border: 2px solid #cc2222;
+        }
+
+        .btn-close-modal:hover:not(:disabled) {
+            background: #ff3333;
+            border-color: #ff3333;
+        }
+
+        .btn-close-modal:disabled {
+            opacity: 0.4;
+            cursor: default;
+        }
+
+        /* Победа */
+        .win-overlay {
+            display: none;
+            text-align: center;
+            background: #fcf8f2;
+            padding: 30px 20px 40px;
+            border-radius: 40px;
+            border: 3px solid #cc2222;
+            margin-top: 20px;
+        }
+
+        .win-overlay.show {
+            display: block;
+        }
+
+        .win-overlay h2 {
+            font-size: 2.4rem;
+            color: #3d2b1f;
+            font-family: 'Georgia', serif;
+        }
+
+        .win-overlay h2::before {
+            content: '★ ';
+            color: #cc2222;
+        }
+
+        .win-overlay p {
+            font-size: 1.2rem;
+            color: #6a5a4a;
+        }
+
+        /* ===== АДАПТИВ ===== */
+        @media (max-width: 1200px) {
+            .doors-grid { gap: 15px; }
+            .door-icon { font-size: 2.2rem; }
+            .door-label { font-size: 0.7rem; padding: 2px 8px; }
+            .door-number { font-size: 1rem; }
+            .door-handle { width: 10px; height: 10px; right: 12px; }
+            .door-front { padding: 10px; }
+            .door-back { padding: 10px; }
+            .door-back .door-icon { font-size: 2rem; }
+            .door-status-open { font-size: 0.6rem; padding: 1px 8px; }
+        }
+
+        @media (max-width: 992px) {
+            .doors-grid { grid-template-columns: repeat(4, 1fr); gap: 15px; }
+            .game-container { padding: 25px; }
+            h1 { font-size: 2.5rem; }
+            .door-icon { font-size: 2.5rem; }
+            .door-label { font-size: 0.8rem; }
+        }
+
+        @media (max-width: 768px) {
+            .game-container { padding: 20px; }
+            h1 { font-size: 2rem; }
+            .header { gap: 18px; }
+            .poet-photo { width: 100px; height: 150px; }
+            .doors-grid { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+            .quote { font-size: 0.95rem; padding-left: 12px; }
+            .controls { flex-direction: column; align-items: stretch; text-align: center; }
+            .sound-control { justify-content: center; }
+            .door-icon { font-size: 2rem; }
+            .door-label { font-size: 0.7rem; padding: 2px 6px; }
+            .door-number { font-size: 0.8rem; }
+            .slogan-item { font-size: 0.85rem; padding: 0 20px; }
+            .slogan-bar { padding: 5px 0; }
+        }
+
+        @media (max-width: 480px) {
+            .poet-photo { width: 70px; height: 110px; }
+            h1 { font-size: 1.5rem; }
+            .doors-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .modal-content { padding: 20px; }
+            .door-icon { font-size: 1.8rem; }
+            .door-label { font-size: 0.6rem; padding: 2px 4px; }
+            .door-number { font-size: 0.7rem; top: 6px; right: 8px; }
+            .door-handle { width: 8px; height: 8px; right: 8px; }
+            .door-front { padding: 8px; }
+            .door-back { padding: 8px; }
+            .door-back .door-icon { font-size: 1.5rem; }
+            .door-status-open { font-size: 0.5rem; padding: 1px 6px; }
+            .slogan-item { font-size: 0.7rem; padding: 0 15px; }
+            .slogan-item::before, .slogan-item::after { content: ''; margin: 0; }
+        }
+
+        @media (max-width: 360px) {
+            .doors-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+            .door-icon { font-size: 1.4rem; }
+            .door-label { font-size: 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="game-container">
+    <!-- Шапка -->
+    <div class="header">
+        <div class="poet-photo">
+            <img src="https://avatars.mds.yandex.net/i?id=62c9df00b6622151d124dacc24518770_l-9098096-images-thumbs&ref=rim&n=13&w=474&h=675" 
+                 alt="Владимир Маяковский" 
+                 loading="lazy">
+        </div>
+        <div class="title-group">
+            <h1>Семь дверей <span>Маяковского</span></h1>
+            <div class="author-line">Автор <span>VaryaMalik</span></div>
+            <div class="quote">И себя не жалея, и врага не щадя, я иду по земле, как по лезвию ножа</div>
+        </div>
+    </div>
+
+    <!-- Революционные лозунги -->
+    <div class="slogan-bar">
+        <div class="slogan-track">
+            <span class="slogan-item">Пролетарии всех стран, соединяйтесь!</span>
+            <span class="slogan-item">Светить всегда, светить везде!</span>
+            <span class="slogan-item">Долой вашу любовь, долой ваше искусство!</span>
+            <span class="slogan-item">Мы — кузнецы, и дух наш — молот!</span>
+            <span class="slogan-item">Не хлеба, а зрелищ!</span>
+            <span class="slogan-item">Время — лучший цензор!</span>
+            <!-- Дублируем для бесконечности -->
+            <span class="slogan-item">Пролетарии всех стран, соединяйтесь!</span>
+            <span class="slogan-item">Светить всегда, светить везде!</span>
+            <span class="slogan-item">Долой вашу любовь, долой ваше искусство!</span>
+            <span class="slogan-item">Мы — кузнецы, и дух наш — молот!</span>
+            <span class="slogan-item">Не хлеба, а зрелищ!</span>
+            <span class="slogan-item">Время — лучший цензор!</span>
+        </div>
+    </div>
+
+    <!-- Периоды -->
+    <div class="periods-label">— Жизненные этапы —</div>
+    <div class="doors-grid" id="doorsGrid"></div>
+
+    <!-- Контролы -->
+    <div class="controls">
+        <div class="sound-control">
+            <span>🔊 Звук:</span>
+            <button class="toggle active" id="soundToggle" aria-label="Переключить звук"></button>
+            <span id="soundLabel">вкл.</span>
+        </div>
+        <button class="btn-reset" id="resetBtn">⟳ Начать заново</button>
+    </div>
+
+    <!-- Блок победы -->
+    <div class="win-overlay" id="winOverlay">
+        <h2>Все двери открыты!</h2>
+        <p>Вы прошли по жизни Маяковского от начала до конца.</p>
+        <p style="font-size:1.5rem; margin-top: 10px; color: #cc2222; font-weight: 600;">«Светить всегда, светить везде...»</p>
+        <button class="btn-reset" style="margin-top:18px;" onclick="location.reload()">⟳ Пройти заново</button>
+    </div>
+</div>
+
+<!-- Модальное окно -->
+<div class="modal" id="questionModal">
+    <div class="modal-content">
+        <h2 id="modalDoorTitle">Дверь 1</h2>
+        <div id="modalBody"></div>
+        <div class="modal-actions">
+            <button class="btn-close-modal" id="closeModalBtn" disabled>Закрыть</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ----- ДАННЫЕ: 7 периодов Маяковского -----
+        const doorsData = [
+            {
+                id: 0,
+                label: 'Ранние годы (до 1911)',
+                emoji: '🌱',
+                questions: [
+                    {
+                        text: 'В каком году родился Владимир Маяковский?',
+                        options: ['1891', '1893', '1895'],
+                        correct: 1
+                    },
+                    {
+                        text: 'В каком городе прошло детство поэта?',
+                        options: ['Москва', 'Багдати (Кутаисская губ.)', 'Тифлис'],
+                        correct: 1
+                    }
+                ]
+            },
+            {
+                id: 1,
+                label: 'Гимназия и революция (1906–1911)',
+                emoji: '📚',
+                questions: [
+                    {
+                        text: 'В какую гимназию поступил Маяковский в Москве?',
+                        options: ['5-я гимназия', '1-я гимназия', '4-я гимназия'],
+                        correct: 0
+                    },
+                    {
+                        text: 'Сколько раз Маяковский был арестован за революционную деятельность?',
+                        options: ['1', '2', '3'],
+                        correct: 2
+                    }
+                ]
+            },
+            {
+                id: 2,
+                label: 'Футуризм и поэзия (1912–1915)',
+                emoji: '🎭',
+                questions: [
+                    {
+                        text: 'Как называлось первое опубликованное стихотворение Маяковского?',
+                        options: ['Ночь', 'Утро', 'Облако в штанах'],
+                        correct: 0
+                    },
+                    {
+                        text: 'В каком году вышла поэма «Облако в штанах»?',
+                        options: ['1913', '1915', '1917'],
+                        correct: 1
+                    }
+                ]
+            },
+            {
+                id: 3,
+                label: 'Революция и «Окна РОСТА» (1917–1921)',
+                emoji: '🔥',
+                questions: [
+                    {
+                        text: 'Какое стихотворение Маяковский написал сразу после Октябрьской революции?',
+                        options: ['Левый марш', 'Наш марш', 'Ода революции'],
+                        correct: 0
+                    },
+                    {
+                        text: 'Сколько плакатов создал Маяковский для «Окон РОСТА»?',
+                        options: ['Около 300', 'Около 500', 'Более 1000'],
+                        correct: 2
+                    }
+                ]
+            },
+            {
+                id: 4,
+                label: 'Зарубежные поездки (1922–1925)',
+                emoji: '🌍',
+                questions: [
+                    {
+                        text: 'В какой стране Маяковский был в 1925 году?',
+                        options: ['Франция', 'США', 'Германия'],
+                        correct: 1
+                    },
+                    {
+                        text: 'Какой цикл стихов написал Маяковский о поездке в США?',
+                        options: ['Париж', 'Стихи об Америке', 'Мексика'],
+                        correct: 1
+                    }
+                ]
+            },
+            {
+                id: 5,
+                label: 'Театр и сатира (1926–1929)',
+                emoji: '🎪',
+                questions: [
+                    {
+                        text: 'Какая сатирическая пьеса Маяковского вышла в 1928 году?',
+                        options: ['Клоп', 'Баня', 'Мистерия-Буфф'],
+                        correct: 0
+                    },
+                    {
+                        text: 'В каком театре ставили пьесы Маяковского?',
+                        options: ['МХАТ', 'Театр Мейерхольда', 'Малый театр'],
+                        correct: 1
+                    }
+                ]
+            },
+            {
+                id: 6,
+                label: 'Последний год (1930)',
+                emoji: '🕯️',
+                questions: [
+                    {
+                        text: 'В каком месяце 1930 года Маяковский покончил с собой?',
+                        options: ['Апрель', 'Март', 'Февраль'],
+                        correct: 0
+                    },
+                    {
+                        text: 'Как называлась последняя поэма Маяковского?',
+                        options: ['Во весь голос', 'Про это', 'Хорошо!'],
+                        correct: 0
+                    }
+                ]
+            }
+        ];
+
+        // Состояние игры
+        const state = {
+            opened: new Array(doorsData.length).fill(false),
+            currentDoorIndex: null,
+            modalOpen: false,
+            soundEnabled: true
+        };
+
+        const doorsGrid = document.getElementById('doorsGrid');
+        const modal = document.getElementById('questionModal');
+        const modalDoorTitle = document.getElementById('modalDoorTitle');
+        const modalBody = document.getElementById('modalBody');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const soundToggle = document.getElementById('soundToggle');
+        const soundLabel = document.getElementById('soundLabel');
+        const resetBtn = document.getElementById('resetBtn');
+
+        // ---- Звук ----
+        function playBeep(frequency = 600, duration = 150, type = 'sine') {
+            if (!state.soundEnabled) return;
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = ctx.createOscillator();
+                const gainNode = ctx.createGain();
+                oscillator.type = type;
+                oscillator.frequency.value = frequency;
+                gainNode.gain.setValueAtTime(0.15, ctx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration / 1000);
+                oscillator.connect(gainNode);
+                gainNode.connect(ctx.destination);
+                oscillator.start();
+                oscillator.stop(ctx.currentTime + duration / 1000);
+            } catch (e) { /* тишина */ }
+        }
+
+        function playCorrectSound() { playBeep(880, 200); setTimeout(() => playBeep(1100, 150), 150); }
+        function playWrongSound() { playBeep(300, 350, 'sawtooth'); }
+        function playOpenSound() { playBeep(660, 120); setTimeout(() => playBeep(880, 120), 120); setTimeout(() => playBeep(1100, 150), 240); }
+
+        // ---- Рендер дверей ----
+        function renderDoors() {
+            doorsGrid.innerHTML = '';
+            doorsData.forEach((door, idx) => {
+                const num = idx + 1;
+
+                const wrapper = document.createElement('div');
+                wrapper.className = 'door-wrapper';
+                if (state.opened[idx]) {
+                    wrapper.classList.add('opened-wrapper');
+                }
+
+                const card = document.createElement('div');
+                card.className = 'door-card';
+                if (state.opened[idx]) {
+                    card.classList.add('opened');
+                }
+
+                // === ПЕРЕДНЯЯ СТОРОНА ===
+                const front = document.createElement('div');
+                front.className = 'door-front';
+
+                const number = document.createElement('div');
+                number.className = 'door-number';
+                number.textContent = num;
+
+                const icon = document.createElement('span');
+                icon.className = 'door-icon';
+                icon.textContent = state.opened[idx] ? '🚪' : door.emoji;
+
+                const label = document.createElement('div');
+                label.className = 'door-label';
+                label.textContent = door.label;
+
+                const handle = document.createElement('div');
+                handle.className = 'door-handle';
+
+                front.appendChild(number);
+                front.appendChild(icon);
+                front.appendChild(label);
+                front.appendChild(handle);
+
+                // === ЗАДНЯЯ СТОРОНА (открыто) ===
+                const back = document.createElement('div');
+                back.className = 'door-back';
+
+                const backIcon = document.createElement('span');
+                backIcon.className = 'door-icon';
+                backIcon.textContent = '✓';
+
+                const backLabel = document.createElement('div');
+                backLabel.className = 'door-label';
+                backLabel.textContent = door.label;
+
+                const statusOpen = document.createElement('div');
+                statusOpen.className = 'door-status-open';
+                statusOpen.textContent = 'открыто';
+
+                back.appendChild(backIcon);
+                back.appendChild(backLabel);
+                back.appendChild(statusOpen);
+
+                card.appendChild(front);
+                card.appendChild(back);
+                wrapper.appendChild(card);
+
+                if (!state.opened[idx]) {
+                    wrapper.addEventListener('click', () => openDoor(idx));
+                }
+
+                doorsGrid.appendChild(wrapper);
+            });
+
+            const allOpened = state.opened.every(v => v === true);
+            if (allOpened) {
+                document.getElementById('winOverlay').classList.add('show');
+            } else {
+                document.getElementById('winOverlay').classList.remove('show');
+            }
+        }
+
+        // ---- Открыть дверь ----
+        function openDoor(index) {
+            if (state.opened[index] || state.modalOpen) return;
+            state.currentDoorIndex = index;
+            showQuestionModal(index, 0);
+        }
+
+        // ---- Показать модалку ----
+        function showQuestionModal(doorIndex, questionIndex) {
+            const door = doorsData[doorIndex];
+            const q = door.questions[questionIndex];
+            if (!q) {
+                finishDoor(doorIndex);
+                return;
+            }
+
+            state.modalOpen = true;
+            modal.classList.add('active');
+            closeModalBtn.disabled = true;
+
+            modalDoorTitle.textContent = `${door.emoji} ${door.label} • вопрос ${questionIndex+1}/${door.questions.length}`;
+
+            let html = `<div class="question-block"><div class="question-text">${q.text}</div><div class="options">`;
+            q.options.forEach((opt, optIdx) => {
+                html += `<button class="option-btn" data-optindex="${optIdx}" data-dooridx="${doorIndex}" data-qidx="${questionIndex}">${opt}</button>`;
+            });
+            html += `</div></div>`;
+            html += `<div class="feedback" id="feedbackArea">Выберите ответ</div>`;
+            modalBody.innerHTML = html;
+
+            document.querySelectorAll('.option-btn').forEach(btn => {
+                btn.addEventListener('click', onOptionClick);
+            });
+        }
+
+        // ---- Обработка клика ----
+        function onOptionClick(e) {
+            const btn = e.currentTarget;
+            if (btn.disabled) return;
+            const doorIdx = parseInt(btn.dataset.dooridx);
+            const qIdx = parseInt(btn.dataset.qidx);
+            const selectedIdx = parseInt(btn.dataset.optindex);
+            const door = doorsData[doorIdx];
+            const q = door.questions[qIdx];
+            const isCorrect = (selectedIdx === q.correct);
+
+            document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+
+            document.querySelectorAll('.option-btn').forEach(b => {
+                const idx = parseInt(b.dataset.optindex);
+                if (idx === q.correct) b.classList.add('correct');
+                if (idx === selectedIdx && !isCorrect) b.classList.add('wrong');
+            });
+
+            const feedback = document.getElementById('feedbackArea');
+            if (isCorrect) {
+                feedback.className = 'feedback success';
+                feedback.textContent = '✅ Верно! Отлично!';
+                playCorrectSound();
+            } else {
+                feedback.className = 'feedback error';
+                feedback.textContent = `❌ Неверно. Правильный ответ: "${q.options[q.correct]}"`;
+                playWrongSound();
+            }
+
+            const nextQ = qIdx + 1;
+            const doorQuestions = door.questions.length;
+
+            setTimeout(() => {
+                if (nextQ < doorQuestions) {
+                    showQuestionModal(doorIdx, nextQ);
+                } else {
+                    finishDoor(doorIdx);
+                }
+            }, 1300);
+        }
+
+        // ---- Завершить дверь ----
+        function finishDoor(doorIndex) {
+            state.opened[doorIndex] = true;
+            state.modalOpen = false;
+            modal.classList.remove('active');
+            closeModalBtn.disabled = false;
+            playOpenSound();
+            renderDoors();
+        }
+
+        // ---- Закрытие модалки ----
+        closeModalBtn.addEventListener('click', function() {
+            if (!this.disabled) {
+                modal.classList.remove('active');
+                state.modalOpen = false;
+            }
+        });
+
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal && !closeModalBtn.disabled) {
+                modal.classList.remove('active');
+                state.modalOpen = false;
+            }
+        });
+
+        // ---- Звук ----
+        soundToggle.addEventListener('click', function() {
+            state.soundEnabled = !state.soundEnabled;
+            this.classList.toggle('active');
+            soundLabel.textContent = state.soundEnabled ? 'вкл.' : 'выкл.';
+        });
+
+        // ---- Сброс ----
+        resetBtn.addEventListener('click', function() {
+            if (confirm('Начать игру заново? Весь прогресс будет сброшен.')) {
+                state.opened.fill(false);
+                state.modalOpen = false;
+                modal.classList.remove('active');
+                renderDoors();
+                document.getElementById('winOverlay').classList.remove('show');
+            }
+        });
+
+        // ---- Инициализация ----
+        renderDoors();
+        console.log('🚪 Семь дверей Маяковского запущены!');
+    })();
+</script>
+</body>
+</html>
